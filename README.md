@@ -1,12 +1,12 @@
 # NeuronOS
 
-NeuronOS is a Windows-first local AI desktop assistant that uses Gemma through Ollama to understand natural language, plan safe computer actions, and execute useful local workflows from a voice or text command.
+NeuronOS is a Windows-first local AI desktop assistant that uses Gemma through Ollama to understand natural language, plan safe computer actions, and execute local workflows from a voice or text command.
 
-It is not a website chatbot. It is a local assistant shell for your PC.
+It runs as a local assistant shell for your PC, with a React/Tauri-ready interface and a FastAPI sidecar backend.
 
-## Buildathon Pitch
+## Overview
 
-Most assistants can answer questions, but they do not reliably operate your computer. NeuronOS turns intent into action:
+NeuronOS supports both normal chat questions and task-oriented desktop commands:
 
 ```text
 "Open ChatGPT"
@@ -15,11 +15,11 @@ Most assistants can answer questions, but they do not reliably operate your comp
 "Remember that my LangGraph project is in D drive"
 ```
 
-NeuronOS classifies whether the user wants a normal answer or a real desktop action. It then plans guarded steps, executes approved local tools, saves memory, and responds through the UI and voice.
+For action requests, it creates a local execution plan, checks safety rules, runs guarded tools, saves memory when needed, and reports the result in the UI.
 
-## Why Gemma
+## Local Model
 
-Gemma is the local reasoning layer for the assistant. In the MVP, deterministic routing handles safety-critical commands, while Gemma-backed responses handle open-ended questions and conversational fallback. This keeps the assistant fast and predictable for PC control, while still feeling like a natural chatbot when the user asks general questions.
+Gemma is used through Ollama for local conversational responses. Deterministic routing handles safety-critical desktop actions so common PC commands stay predictable and fast, while the local model handles open-ended questions and fallback conversation.
 
 Examples:
 
@@ -221,19 +221,15 @@ Open:
 http://127.0.0.1:1420
 ```
 
-## Demo Script
+## Example Commands
 
-Use this sequence for a buildathon demo:
-
-1. Ask: `What is LangGraph?`
-2. Command: `Open ChatGPT`
-3. Command: `Open Gmail`
-4. Command: `Play Faded on YouTube`
-5. Command: `Increase volume to 64`
-6. Command: `Remember that my LangGraph project is in D drive`
-7. Ask: `Where is my LangGraph project?`
-
-This demonstrates the key distinction: NeuronOS answers normal questions like a chatbot, but executes real PC tasks when the user asks it to do something.
+- `What is LangGraph?`
+- `Open ChatGPT`
+- `Open Gmail`
+- `Play Faded on YouTube`
+- `Increase volume to 64`
+- `Remember that my LangGraph project is in D drive`
+- `Where is my LangGraph project?`
 
 ## Testing
 

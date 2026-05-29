@@ -21,6 +21,26 @@ For action requests, it creates a local execution plan, checks safety rules, run
 
 Gemma is used through Ollama for local conversational responses. Deterministic routing handles safety-critical desktop actions so common PC commands stay predictable and fast, while the local model handles open-ended questions and fallback conversation.
 
+NeuronOS uses Gemma for:
+
+- answering normal questions, such as `What is LangGraph?`
+- fallback conversation when a request is not a supported desktop action
+- keeping open-ended assistant responses local instead of sending them to a cloud model
+- local-first privacy, because model calls stay on the user's machine through Ollama
+
+The default lightweight model is `gemma3:1b` for faster laptop response times. If your machine has enough free RAM, you can use Gemma 4 by setting `NEURONOS_CHAT_MODEL` or the fallback model:
+
+```powershell
+$env:NEURONOS_CHAT_MODEL="gemma4:e2b"
+$env:OLLAMA_FALLBACK_MODEL="gemma4:e2b"
+```
+
+Pull the model first:
+
+```powershell
+ollama pull gemma4:e2b
+```
+
 Examples:
 
 - `What is LangGraph?` -> answer conversationally with the local model.
@@ -158,7 +178,8 @@ You can override these with environment variables:
 $env:NEURONOS_DATA_DIR="D:\NeuronOS\data"
 $env:HF_HOME="D:\NeuronOS\hf-cache"
 $env:OLLAMA_MODELS="D:\Ollama\models"
-$env:OLLAMA_MODEL="gemma3:1b"
+$env:NEURONOS_CHAT_MODEL="gemma3:1b"
+$env:OLLAMA_FALLBACK_MODEL="gemma4:e2b"
 ```
 
 ## Prerequisites
@@ -172,6 +193,8 @@ $env:OLLAMA_MODEL="gemma3:1b"
 
 ```powershell
 ollama pull gemma3:1b
+# Optional stronger fallback/model:
+ollama pull gemma4:e2b
 ```
 
 Optional:
